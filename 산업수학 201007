@@ -1,0 +1,71 @@
+%EX1
+
+xi=[1, 1.3, 1.6, 1.9, 2.2];
+fi=[0.7651977, 0.6200860, 0.4554022, 0.2818186 0.1103623];
+
+%ex1007_interp_Lagra
+%그래프
+plot(xi,fi);
+%점으로 이루어진 그래프
+plot(xi,fi,'o');
+
+x=linspace(0,1);
+y=sin(pi*x);
+plot(x,y);
+plot(x,y,'o');
+
+n=4; %n:데이터의 갯수
+
+N=100;
+x=linspace(1, 2.2,N);
+p=zeros(1,N);
+
+for k=0:n
+    
+    Lnk=ones(1,N); %ones:각각의 성분들을 1로채워주는 함수
+    for i=0:n
+       if (i+1)~=(k+1)
+       Lnk=Lnk.*(x-xi(i+1))/(xi(k+1)-xi(i+1));
+    
+       end
+    end
+    
+    p=p+fi(k+1)*Lnk;
+ end
+    plot (x,p,xi,fi,'ro');
+    
+    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+%Ex2
+    xi=[1, 1.3, 1.6, 1.9, 2.2];
+fi=[0.7651977, 0.6200860, 0.4554022, 0.2818186 0.1103623];
+n=4;
+
+
+
+
+F=zeros(n+1);
+for i=1:n+1
+    F(i,1)=fi(i);   
+end
+
+for j=2:5
+    for i=1:(n+1)-j+1
+        F(i,j)=(F(i+1,j-1)-F(i,j-1))/(xi(i+j-1)-xi(i));   
+    end
+end
+
+F
+
+N=100;
+x=linspace(1,2.2,N);
+p=F(1,1)*ones(1,N);
+for k=1:n
+    multi=ones(1,N);
+    for l=0:k-1
+        multi=multi.*(x-xi(l+1));
+    end
+    p=p+F(1,k+1)*multi;
+end
+
+plot(x,p,xi,fi,'ro');
