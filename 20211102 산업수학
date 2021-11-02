@@ -1,0 +1,30 @@
+x0=0; y0=0;
+x1=1; y1=0;
+
+gx0=0.5; gy0=0.5;
+gx1=2; gy1=-1;
+
+a0=gx0-x0; b0=gy0-y0;
+a1=x1-gx1; b1=y1-gy1;
+
+t=linspace(0,1);
+c3= -2*(x1-x0)+(a0+a1);
+c2=3*(x1-x0)-(2*a0+a1);
+c1=a0;
+c0=x0;
+xt=c3*t.^3+c2*t.^2+c1*t+c0;
+
+c3= -2*(y1-y0)+(b0+b1);
+c2=3*(y1-y0)-(2*b0+b1);
+c1=b0;
+c0=y0;
+yt=c3*t.^3+c2*t.^2+c1*t+c0;
+
+clf;
+plot(xt,yt);
+%hold on;
+%line([x0,gx0],[y0,gy0],'color','r');
+%line([x1,gx1],[y1,gy1],'color','r');
+%hold off;
+
+axis equal;
