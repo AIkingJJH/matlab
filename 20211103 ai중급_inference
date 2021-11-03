@@ -1,0 +1,46 @@
+    
+#------------------------ 데이터 쌓아놓기
+def stackRawData(data) :
+    try :
+        _line = row2String(data)
+        print(_line, '--> raw.csv')
+#         appendLine("raw.csv", _line)
+    except :
+        print("Error on Writing to raw.csv")
+        return False
+    else :
+        return True
+#------------------------ New 데이터에 대한 Inference 실행
+def doInference(data) :
+    #---- Model.predict()
+    
+    #---- Post-Processing()
+    
+    #---- Decesion Making()  --> Writing to Current Status
+   
+    print('Inference --> 상태 정상')
+    
+#------------------------ New 데이터에 대한 Processing
+def doForNewData(_file):
+    print("---------------------------------------------")
+    
+    df_new = pd.read_csv(_file, encoding='euckr', header=None)
+    os.remove(_file)
+    # print(df_new)
+    
+    i = 0
+    while i < len(df_new) :
+        try :
+            stackRawData(df_new.loc[i])    #---- Data DB화.............
+
+            doInference(df_new.loc[i])     #---- Real-Time Data에 대한 상태 추론 ---> 결과 저장
+        except:
+            print("One Data Processing 오류")
+        else :
+            i += 1
+
+#-------------------------------- Main Loop
+while True:
+    if os.path.isfile(new_file) : 
+        doForNewData(new_file)
+    time.sleep(6) # run every 1 second... you can change that
