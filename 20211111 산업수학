@@ -1,0 +1,47 @@
+exact=cos(0.9);
+
+N=8;
+hh=zeros(1,N);
+ee=zeros(1,N);
+ee2=zeros(1,N);
+ee3=zeros(1,N);
+
+for i=1:N
+    hh(i)=10^(2-i);
+end
+
+for i=1:N
+  h=hh(i);
+  x0=0.9;
+
+
+  df=(sin(x0+h)-sin(x0-h))/(2*h);
+  ee(i)=abs(df-exact);
+
+  F11=(sin(x0+h)-sin(x0-h))/(2*h);
+  F12=(sin(x0+h/2)-sin(x0-h/2))/h;
+  
+  F21=F12 + (F12-F11)/(4-1);
+  
+  df=F21;
+  ee2(i)=abs(df-exact);
+  
+  F13=(sin(x0+h/4)-sin(x0-h/4))/(h/2);
+  F22=F13 + (F13-F12)/(4-1);
+  
+  F31=F22 + (F22-F21)/(16-1);
+  
+  df= F31;
+  ee3(i)=abs(df-exact);
+end
+
+clf;
+loglog(hh,ee,'o-')
+hold on;
+loglog(hh,ee2,'o-')
+loglog(hh,ee3,'o-')
+hold off;
+grid on;
+line([1e-4,1e-2],[1e-10,1e-6],'color','r')
+set(gca, 'xtick',10.^(-6:2));
+set(gca, 'xtick',10.^(-15:0));
