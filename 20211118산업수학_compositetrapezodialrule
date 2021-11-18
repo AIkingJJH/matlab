@@ -1,0 +1,30 @@
+f=@(x) exp(x)*sin(x);
+ex=0.5*exp(1)*(sin(1)-cos(1))-...
+    0.5*exp(-1)*(sin(-1)-cos(-1));
+a=-1; b=1;
+
+hh=10.^-(0:7);
+ee=zeros(1,8);
+h=(b-a)/n;
+
+
+
+for ii=1:8
+    h=hh(ii);
+    n=round((b-a)/h);
+    
+    disp([ii,n])
+    
+    val=0.5*h*(f(a)+f(b));
+    
+    for j=1:n-1
+    xj=a+j*h;
+    val=val+h*f(xj);
+    end
+    
+    err=abs(val-ex);
+    ee(ii)=err;
+end
+
+loglog(hh,ee)
+grid on;
